@@ -23,5 +23,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("company/", include("company.urls")),
     path("product/", include("products.urls")),
+    path("category/", include("categories.urls")),
     path("docs/", include_docs_urls(title="Company API")),
 ]
