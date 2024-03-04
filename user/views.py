@@ -1,4 +1,6 @@
+from django.contrib.auth import logout
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
@@ -52,3 +54,18 @@ def register(request):
 @permission_classes([IsAuthenticated])
 def profile(request):
     return Response(UserSerializer(request.user).data, status=status.HTTP_200_OK)
+
+
+# Create logout function
+@api_view(["GET"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def logout_user(request):
+    print(request)
+    try:
+        request.user.auth_token.delete()
+    except (AttributeError, ObjectDoesNotExist):
+        pass
+    logout(request)
+
+    return Response({"message": "User logged out successfully "}, status=status.HTTP_200_OK)
