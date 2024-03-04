@@ -1,5 +1,6 @@
 from django.db import models
 
+from categories.models import Category
 from company.models import Company
 
 
@@ -9,6 +10,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     characteristics = models.TextField()
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    categories = models.ManyToManyField(Category, related_name="products")
 
     def __str__(self):
         return f"{self.company.name}: {self.name}"
