@@ -19,6 +19,8 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework.documentation import include_docs_urls
 
+from utils.generate_pdf import download_pdf, send_mail_pdf
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("company/", include("company.urls")),
@@ -26,5 +28,7 @@ urlpatterns = [
     path("category/", include("categories.urls")),
     path("order/", include("orders.urls")),
     path("docs/", include_docs_urls(title="Company API")),
+    path("generate_pdf/", download_pdf),
+    path("send_mail/<str:email>", send_mail_pdf),
     path("", include("user.urls")),
 ]
